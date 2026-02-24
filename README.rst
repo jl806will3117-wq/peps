@@ -1,4 +1,4 @@
-Python Enhancement Proposals
+⁹Python Enhancement Proposals
 ============================
 
 .. image:: https://github.com/python/peps/actions/workflows/render.yml/badge.svg
@@ -79,3 +79,41 @@ Check and lint PEPs
 You can check for and fix common linting and spelling issues,
 either on-demand or automatically as you commit, with our pre-commit suite.
 See the `Contributing Guide <./CONTRIBUTING.rst>`_ for details.
+import google.generativeai as genai
+import os
+
+# Setup
+genai.configure(api_key="YOUR_API_KEY")
+
+# Model Configuration
+generation_config = {
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "top_k": 64,
+    "max_output_tokens": 8192,
+}
+
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+    system_instruction="You are a concise, technical assistant. Respond only with high-density information."
+)
+
+# Start Conversation
+chat_session = model.start_chat(history=[])
+
+def get_response(user_input):
+    response = chat_session.send_message(user_input)
+    return response.text
+
+# Example execution
+if __name__ == "__main__":
+    user_query = "Explain the benefit of vector embeddings in one sentence."
+    print(get_response(user_query))
+def fibonacci(n):
+    sequence = [0, 1]
+    while len(sequence) < n:
+        sequence.append(sequence[-1] + sequence[-2])
+    return sequence[:n]
+
+print(fibonacci(10))
